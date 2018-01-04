@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Dashboard from '@/components/dashboards/Dashboards'
+import MainDashboard from '@/components/dashboards/MainDashboard'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    { path: '/', redirect: '/dashboard' },
+    { path: '/', redirect: '/dashboard/main' },
     {
       path: '/dashboard',
-      name: 'HelloWorld',
-      component: HelloWorld
+      component: Dashboard,
+      children: [ { path: '', redirect: 'main' }, { path: 'main', name: 'MainDashboard', component: MainDashboard } ]
     }
   ],
   linkActiveClass: 'active',

@@ -1,0 +1,24 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    ".babelrc": true,
+    ".gitignore": true,
+    ".editorconfig": true,
+    ".eslintignore": true,
+    ".eslintrc.js": true,
+    ".postcssrc.js": true,
+    "package-lock.json": true,
+    "config": true,
+    "build": true,
+  },
+  "editor.formatOnSave": true,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.useTabs": false,
+  "prettier.tabWidth": 2,
+  "prettier.spaceBeforeFunctionParen": true
+}

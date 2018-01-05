@@ -16,7 +16,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "./styles/_variables";
   #app {
-    margin-left: 65px;
+    margin-left: $main-nav-size + $section-nav-width;
   }
 </style>

@@ -43,6 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../../styles/_variables';
   nav {
     display: flex;
     flex-direction: column;
@@ -52,9 +53,9 @@ export default {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 65px;
+    width: $main-nav-size;
     background-color: white;
-    border-right: solid 1px #dedede;
+    border-right: solid 1px $border-color;
     a {
       color: #a7a7a7;
       display: flex;
@@ -66,8 +67,8 @@ export default {
       text-decoration: none;
       transition: 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
       &:hover,&.active {
-        color: #0ca57c;
-        border-left: solid 4px #0ca57c;
+        color: $primary-color;
+        border-left: solid 4px $primary-color;
       }
     }
   }

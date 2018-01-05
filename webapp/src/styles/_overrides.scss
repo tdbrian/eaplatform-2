@@ -1,22 +1,30 @@
+@import 'variables';
+
 html,
 body {
-  // background-color: $page-background-color;
-  font-family: 'Roboto', sans-serif;
+	// background-color: $page-background-color;
+	font-family: 'Roboto', sans-serif;
 }
 
 body {
-  background-color: transparent;
-  color: white;
+	background-color: transparent;
+	color: $font-color;
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 300;
 }
 
 button,
 .btn {
-  cursor: pointer;
-  border-radius: 2px;
+	cursor: pointer;
+	border-radius: 2px;
 }
 
 small,
 .small {
-  font-size: 90%;
-  font-weight: 400;
+	font-size: 90%;
+	font-weight: 400;
 }

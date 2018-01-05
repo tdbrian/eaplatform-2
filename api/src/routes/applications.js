@@ -21,5 +21,9 @@ router
         appDb.getProjectsCollection()
             .updateOne({ _id: mongo.ObjectID(app._id) }, app, (err, op) => res.send(op))
     })
+    .delete('/:id', (req, res) => {
+        appDb.getProjectsCollection()
+            .updateOne({ _id: mongo.ObjectID(app._id) }, app, (err, op) => res.send(op))
+    })
 
 module.exports = router

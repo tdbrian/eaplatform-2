@@ -6,11 +6,11 @@
     <a href="#" title="User Interfaces">
       <i class="zmdi zmdi-apps"></i>
     </a>
-    <a href="#" title="Business Domain">
-      <i class="zmdi zmdi-case"></i>
-    </a>
     <a href="#" title="Services">
       <i class="zmdi zmdi-rss"></i>
+    </a>
+    <a href="#" title="Business Domain">
+      <i class="zmdi zmdi-case"></i>
     </a>
     <a href="#" title="Personas">
       <i class="zmdi zmdi-accounts-list"></i>

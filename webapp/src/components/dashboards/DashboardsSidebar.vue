@@ -5,7 +5,7 @@
       <i class="zmdi zmdi-view-dashboard"></i>
       Dashboards
     </div>
-    <a href="#">Main Dashboard</a>
+    <router-link :to="{ name: 'MainDashboard' }">Main Dashboard</router-link>
   </div>
 </template>
 
@@ -15,4 +15,3 @@ export default {
   components: { Logo }
 }
 </script>
-

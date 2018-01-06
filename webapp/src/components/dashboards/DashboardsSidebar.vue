@@ -5,7 +5,7 @@
       <i class="zmdi zmdi-view-dashboard"></i>
       Dashboards
     </div>
-    <router-link :to="{ name: 'MainDashboard' }">Main Dashboard</router-link>
+    <router-link to="/dashboard/main">Main Dashboard</router-link>
   </div>
 </template>
 

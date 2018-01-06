@@ -3,8 +3,8 @@
 
     <header class="default-padding">
       <div class="title">
-        <h3>Browser Apps</h3>
-        <h1>Apps List</h1>
+        <h3>Services</h3>
+        <h1>Services List</h1>
       </div>
     </header>
 
@@ -12,7 +12,9 @@
 
     <div class="row justify-content-center mt-5">
       <div class="info alert alert-secondary text-center">
-        Browser Apps are coming soon, but not yet available.
+        There are no services yet. Ready to add one?
+        <br>
+        <button class="btn btn-outline-primary mt-3">Create First Service</button>
       </div>
     </div>
 

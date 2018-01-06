@@ -6,12 +6,12 @@
     <router-link to="/browser-apps/list" title="Browser App">
       <i class="zmdi zmdi-desktop-windows"></i>
     </router-link>
-    <a href="#" title="Services">
+    <router-link to="/services/list" title="Services">
       <i class="zmdi zmdi-rss"></i>
-    </a>
-    <a href="#" title="Business Domain">
+    </router-link>
+    <router-link to="/business-domains/list" title="Business Domain">
       <i class="zmdi zmdi-case"></i>
-    </a>
+    </router-link>
     <a href="#" title="Personas">
       <i class="zmdi zmdi-accounts-list"></i>
     </a>

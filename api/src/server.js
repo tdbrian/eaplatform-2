@@ -14,7 +14,7 @@ mongodb.connect((dbClient) => {
     app.use(`${v1Api}applications`, require('./routes/applications'))
 
     // start server
-    const port = 3000
+    const port = 40012
     app.listen(port, () => console.info(`Server running on localhost:${port}`))
 
     process.on('exit', () => {

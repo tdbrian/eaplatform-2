@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient
 
 // Connection URL
-const url = 'mongodb://localhost:27017'
+const url = 'mongodb://localhost:38611'
 
 // Database Name
 const dbName = 'eaplatform'
@@ -12,6 +12,7 @@ let db;
 // Use connect method to connect to the server
 function connect(fn) {
     MongoClient.connect(url, (err, client) => {
+        if (err) return console.error(err)
         console.log("Connected successfully to eaplatform db")
         db = client.db(dbName)
         fn(client)

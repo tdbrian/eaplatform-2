@@ -15,7 +15,6 @@
     "config": true,
     "build": true,
   },
-  "editor.formatOnSave": true,
   "prettier.semi": false,
   "prettier.singleQuote": true,
   "prettier.useTabs": false,

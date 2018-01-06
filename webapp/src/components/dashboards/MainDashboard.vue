@@ -1,7 +1,7 @@
 <template>
-  <section class="page">
+  <section class="page default-padding">
 
-    <header>
+    <header class="mb-3">
       <div class="title">
         <h3>Dashboards</h3>
         <h1>Main Dashboard</h1>

@@ -1,11 +1,11 @@
 <template>
   <nav>
-    <a href="#" class="active" title="Dashboards">
+    <router-link to="/dashboard/main" title="Dashboards">
       <i class="zmdi zmdi-view-dashboard"></i>
-    </a>
-    <a href="#" title="User Interfaces">
-      <i class="zmdi zmdi-apps"></i>
-    </a>
+    </router-link>
+    <router-link to="/browser-apps/list" title="Browser App">
+      <i class="zmdi zmdi-desktop-windows"></i>
+    </router-link>
     <a href="#" title="Services">
       <i class="zmdi zmdi-rss"></i>
     </a>

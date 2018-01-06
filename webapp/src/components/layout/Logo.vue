@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>E<span class="a-color">A</span><span class="inner">Platform</span></span>
+    <span>e<span class="a-color">a</span><span class="inner">Platform</span></span>
   </div>
 </template>
 

@@ -12,7 +12,7 @@
     ".eslintrc.js": true,
     ".postcssrc.js": true,
     "package-lock.json": true,
-    "config": true,
+    "config": false,
     "build": true,
   },
   "prettier.semi": false,

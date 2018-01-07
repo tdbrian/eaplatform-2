@@ -4,7 +4,7 @@ let appDb = require('../database/mongodb')
 
 router
     .get('/', (req, res) => {
-        appDb.getProjectsCollection().find({})
+        appDb.getProjectsCollection().find({ deleted: false })
             .toArray((err, docs) => res.send(docs))
     })
     .get('/:id', (req, res) => {
@@ -12,9 +12,15 @@ router
             .findOne({_id: mongo.ObjectID(req.params.id)}, (err, doc) => res.send(doc))
     })
     .post('/', (req, res) => {
-        let app = req.body
+        let { name, description } = req.body
+        let newApp = {
+            deleted: false,
+            name,
+            description,
+            type: 'REST'
+        }
         appDb.getProjectsCollection()
-            .insert(app, (response) => res.send(response))
+            .insert(newApp, (response) => res.send(response))
     })
     .put('/', (req, res) => {
         let app = req.body

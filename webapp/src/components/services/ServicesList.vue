@@ -137,9 +137,9 @@ export default {
         try {
           if (this.formStatus === 'new') {
             this.services.push(this.selectedService)
-            axios.post(`api/applications`, this.selectedService)
+            axios.post(`api/services`, this.selectedService)
           }
-          if (this.formStatus === 'edit') axios.put(`api/applications`, this.selectedService)
+          if (this.formStatus === 'edit') axios.put(`api/services`, this.selectedService)
         } catch (e) {
           if (this.formStatus === 'new') {
             this.services.filter(service => service.name !== this.selectedService.name)
@@ -164,7 +164,7 @@ export default {
       }
     },
     async getServices () {
-      const { data } = await axios.get(`/api/applications`)
+      const { data } = await axios.get(`/api/services`)
       this.services = data
       if (data && data.length > 0) this.formStatus = 'notSelected'
     },
@@ -175,7 +175,7 @@ export default {
     deleteService () {
       let preDeletedService = {...this.selectedService}
       try {
-        axios.delete(`/api/applications/${this.selectedService._id}`)
+        axios.delete(`/api/services/${this.selectedService._id}`)
         this.services = this.services.filter(service => service._id !== this.selectedService._id)
       } catch (error) {
         this.services.push(preDeletedService)

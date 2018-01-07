@@ -11,7 +11,7 @@ mongodb.connect((dbClient) => {
 
     // routes
     app.get('/', (req, res) => res.send('API'))
-    app.use(`${v1Api}applications`, require('./routes/applications'))
+    app.use(`${v1Api}services`, require('./routes/services'))
 
     // start server
     const port = 40012

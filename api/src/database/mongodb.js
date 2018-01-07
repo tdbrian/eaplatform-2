@@ -19,12 +19,12 @@ function connect(fn) {
     })
 }
 
-function getProjectsCollection() {
-    return db.collection('applications')
+function getServicesCollection() {
+    return db.collection('services')
 }
 
 module.exports = {
     connect,
     db,
-    getProjectsCollection
+    getServicesCollection
 }

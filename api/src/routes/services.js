@@ -4,11 +4,11 @@ let appDb = require('../database/mongodb')
 
 router
     .get('/', (req, res) => {
-        appDb.getProjectsCollection().find({ deleted: false })
+        appDb.getServicesCollection().find({ deleted: false })
             .toArray((err, docs) => res.send(docs))
     })
     .get('/:id', (req, res) => {
-        appDb.getProjectsCollection()
+        appDb.getServicesCollection()
             .findOne({_id: mongo.ObjectID(req.params.id)}, (err, doc) => res.send(doc))
     })
     .post('/', (req, res) => {
@@ -19,13 +19,13 @@ router
             description,
             type: 'REST'
         }
-        appDb.getProjectsCollection()
+        appDb.getServicesCollection()
             .insert(newApp, (response) => res.send(response))
     })
     .put('/', async (req, res) => {
         let { _id, name, description } = req.body
         try {
-            let op = await appDb.getProjectsCollection().updateOne({ _id: mongo.ObjectID(_id) }, { $set: { name, description } })
+            let op = await appDb.getServicesCollection().updateOne({ _id: mongo.ObjectID(_id) }, { $set: { name, description } })
             res.send(op)
         } catch (error) {
             console.error(error)
@@ -33,7 +33,7 @@ router
         }
     })
     .delete('/:id', (req, res) => {
-        appDb.getProjectsCollection()
+        appDb.getServicesCollection()
             .updateOne({ _id: mongo.ObjectID(req.params.id) }, { $set: { deleted: true } }, (err, op) => res.send(op))
     })
 

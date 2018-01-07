@@ -18,7 +18,7 @@
       <div class="col-3">
         <div class="stats-item">
           <i class="zmdi zmdi-rss"></i>
-          0 <br> <span>services</span>
+          {{servicesCount}} <br> <span>services</span>
         </div>
       </div>
       <div class="col-3">
@@ -39,7 +39,16 @@
 </template>
 
 <script>
-export default {}
+import axios from 'axios'
+export default {
+  data: () => ({
+    servicesCount: undefined
+  }),
+  async created () {
+    const { data } = await axios.get(`/api/applications`)
+    this.servicesCount = data.length
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -8,7 +8,7 @@
       </div>
     </header>
 
-    <hr>
+    <hr class="mt-3">
 
     <div class="d-flex justify-content-center mt-5">
       <div class="info alert alert-secondary text-center">

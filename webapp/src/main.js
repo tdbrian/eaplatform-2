@@ -3,10 +3,20 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VeeValidate from 'vee-validate'
 
 import './styles/styles.scss'
 
 Vue.config.productionTip = false
+
+var valConfig = {
+  classes: true,
+  classNames: {
+    invalid: 'is-invalid'
+  }
+}
+
+Vue.use(VeeValidate, valConfig)
 
 /* eslint-disable no-new */
 new Vue({

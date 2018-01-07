@@ -10,7 +10,7 @@
 
     <hr>
 
-    <div class="row justify-content-center mt-5">
+    <div class="d-flex justify-content-center mt-5">
       <div class="info alert alert-secondary text-center">
         Browser Apps are coming soon, but not yet available.
       </div>

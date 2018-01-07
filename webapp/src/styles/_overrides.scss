@@ -17,6 +17,10 @@ h3 {
 	font-weight: 300;
 }
 
+h3 {
+  font-size: 16px;
+}
+
 button,
 .btn {
 	cursor: pointer;
@@ -31,4 +35,9 @@ small,
 
 .alert {
   border-radius: 2px;
+}
+
+hr {
+  margin-top: 0;
+  margin-bottom: 0;
 }

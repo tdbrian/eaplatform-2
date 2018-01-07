@@ -9,7 +9,8 @@
 	],
 	"settings": {
 		"cSpell.words": [
-			"eaplatform"
+			"eaplatform",
+			"vuex"
 		]
 	}
 }

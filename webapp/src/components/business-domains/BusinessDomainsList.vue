@@ -3,18 +3,18 @@
 
     <header class="default-padding">
       <div class="title">
-        <h3>Services</h3>
-        <h1>Services List</h1>
+        <h3>Business Domains</h3>
+        <h1>Domain Objects</h1>
       </div>
     </header>
 
     <hr>
 
-    <div class="row justify-content-center mt-5">
+    <div class="d-flex justify-content-center mt-5">
       <div class="info alert alert-secondary text-center">
-        There are no services yet. Ready to add one?
+        There are no Business Domain Objects yet. Ready to add one?
         <br>
-        <button class="btn btn-outline-primary mt-3">Create Service</button>
+        <button class="btn btn-outline-primary mt-3">Create Domain Object</button>
       </div>
     </div>
 

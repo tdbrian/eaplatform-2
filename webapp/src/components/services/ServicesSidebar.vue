@@ -2,7 +2,7 @@
   <div class="section-nav">
     <logo/>
     <div class="header">
-      <i clasl="zmdi zmdi-rss"></i>
+      <i class="zmdi zmdi-rss"></i>
       Services
     </div>
     <router-link to="/services/list">Services List</router-link>

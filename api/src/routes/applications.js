@@ -22,14 +22,19 @@ router
         appDb.getProjectsCollection()
             .insert(newApp, (response) => res.send(response))
     })
-    .put('/', (req, res) => {
-        let app = req.body
-        appDb.getProjectsCollection()
-            .updateOne({ _id: mongo.ObjectID(app._id) }, app, (err, op) => res.send(op))
+    .put('/', async (req, res) => {
+        let { _id, name, description } = req.body
+        try {
+            let op = await appDb.getProjectsCollection().updateOne({ _id: mongo.ObjectID(_id) }, { $set: { name, description } })
+            res.send(op)
+        } catch (error) {
+            console.error(error)
+            res.send('Unable to update service.')
+        }
     })
     .delete('/:id', (req, res) => {
         appDb.getProjectsCollection()
-            .updateOne({ _id: mongo.ObjectID(app._id) }, app, (err, op) => res.send(op))
+            .updateOne({ _id: mongo.ObjectID(req.params.id) }, { $set: { deleted: true } }, (err, op) => res.send(op))
     })
 
 module.exports = router

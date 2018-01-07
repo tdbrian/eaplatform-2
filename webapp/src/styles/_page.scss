@@ -63,6 +63,10 @@ $margin: 30px;
       font-weight: 500 !important;
     }
   }
+  &.selected {
+    background-color: #a7a7a7 !important;
+    color: white;
+  }
 }
 
 .table td {

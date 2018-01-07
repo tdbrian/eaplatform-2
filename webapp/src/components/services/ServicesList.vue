@@ -23,7 +23,7 @@
 
       <!-- Services column -->
       <div class="col-7">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mb-2">
           <h1>Services</h1>
           <button class="btn btn-outline-primary" @click="createNewService" v-if="formStatus !== 'new'">
             <i class="zmdi zmdi-plus-circle"></i> New Service
@@ -44,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="selectable" v-for="service in services" :key="service.name" @click="selectService(service)">
+              <tr :class="{ selectable: true, selected: service._id !== undefined && service._id === selectedService._id }" v-for="service in services" :key="service.name" @click="selectService(service)">
                 <td>{{service.name}}</td>
                 <td v-if="service.description">{{service.description}}</td>
                 <td v-if="!service.description">(no description)</td>
@@ -62,9 +62,10 @@
           Please select one of the services to the left.
         </h3>
 
-        <form v-if="formStatus !== 'notSelected'" @submit.prevent="attemptInsert">
+        <form v-if="formStatus !== 'notSelected'" @submit.prevent="attemptSave">
           <fieldset>
-            <h1 class="mb-4">Add Service</h1>
+            <h1 class="mb-3" v-if="formStatus === 'new'">Add Service</h1>
+            <h1 class="mb-3" v-if="formStatus === 'edit'">Edit Service</h1>
             <div class="form-group">
               <label for="name">Name</label>
               <input name="name"
@@ -85,11 +86,13 @@
                 v-model="selectedService.description"
                 v-validate="'max:500'"
                 placeholder="Enter some info about the service..."
-                rows="6"></textarea>
+                rows="3"></textarea>
               <span v-show="errors.has('description')" class="invalid-feedback">{{ errors.first('description') }}</span>
             </div>
-            <button type="submit" class="btn btn-primary mt-2">Save</button>
-            <button type="reset" class="btn btn mt-2" @click="resetForm">Cancel</button>
+            <button type="button" class="btn btn-outline-danger" v-if="formStatus === 'edit'" @click="deleteService">Delete Service</button>
+            <br>
+            <button type="submit" class="btn btn-primary mt-4">Save</button>
+            <button type="reset" class="btn btn mt-4" @click="resetForm">Cancel</button>
           </fieldset>
         </form>
       </div>
@@ -106,7 +109,6 @@ import axios from 'axios'
 export default {
   data: () => ({
     loading: false,
-    isSaving: false,
     formStatus: 'empty', // empty, notSelected, new, edit
     services: [],
     selectedService: {
@@ -128,17 +130,29 @@ export default {
         this.errors.clear()
       })
     },
-    async attemptInsert () {
+    async attemptSave () {
+      let preSaveService = {...this.selectedService}
       let validation = await this.$validator.validateAll()
       if (validation) {
         try {
-          this.isSaving = true
-          await axios.post(`api/applications`, this.selectedService)
-          await this.getServices()
+          if (this.formStatus === 'new') {
+            this.services.push(this.selectedService)
+            axios.post(`api/applications`, this.selectedService)
+          }
+          if (this.formStatus === 'edit') axios.put(`api/applications`, this.selectedService)
         } catch (e) {
-          this.errors.push(e)
+          if (this.formStatus === 'new') {
+            this.services.filter(service => service.name !== this.selectedService.name)
+          } else if (this.formStatus === 'edit') {
+            this.selectedService = {...preSaveService}
+          }
         } finally {
-          this.isSaving = false
+          this.getServices()
+          this.formStatus = 'notSelected'
+          this.selectedService = {
+            name: '',
+            description: ''
+          }
         }
       }
     },
@@ -157,6 +171,22 @@ export default {
     selectService (service) {
       this.selectedService = service
       this.formStatus = 'edit'
+    },
+    deleteService () {
+      let preDeletedService = {...this.selectedService}
+      try {
+        axios.delete(`/api/applications/${this.selectedService._id}`)
+        this.services = this.services.filter(service => service._id !== this.selectedService._id)
+      } catch (error) {
+        this.services.push(preDeletedService)
+      } finally {
+        this.getServices()
+        this.formStatus = 'notSelected'
+        this.selectedService = {
+          name: '',
+          description: ''
+        }
+      }
     }
   },
   computed: {

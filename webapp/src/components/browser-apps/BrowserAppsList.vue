@@ -21,5 +21,8 @@
 
 <script>
 export default {
+  created () {
+    console.dir(this.$store.state)
+  }
 }
 </script>

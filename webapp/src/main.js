@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/store'
 import VeeValidate from 'vee-validate'
 
 import './styles/styles.scss'
@@ -21,6 +22,7 @@ Vue.use(VeeValidate, valConfig)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: { App }

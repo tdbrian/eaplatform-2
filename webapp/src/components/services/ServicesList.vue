@@ -13,25 +13,25 @@
     <div class="info" v-if="loading"></div>
 
     <!-- No services message -->
-    <div class="info" v-if="!hasServices && formStatus === 'empty'">
+    <div class="info" v-if="!HAS_SERVICES && SERVICES_EMPTY">
       There are no services yet. Ready to add one?
       <br>
-      <button class="btn btn-primary mt-3" @click="formStatus = 'new'">Create First Service</button>
+      <button class="btn btn-primary mt-3" @click="SETUP_NEW_SERVICE">Create First Service</button>
     </div>
 
-    <div class="master-detail" v-else-if="formStatus !== 'empty'">
+    <div class="master-detail" v-else-if="!SERVICES_EMPTY">
 
       <!-- Services column -->
       <div class="col-7">
         <div class="d-flex justify-content-between mb-2">
           <h1>Services</h1>
-          <button class="btn btn-outline-primary" @click="createNewService" v-if="formStatus !== 'new'">
+          <button class="btn btn-outline-primary" v-if="SERVICES_NEW_FORM" @click="SETUP_NEW_SERVICE">
             <i class="zmdi zmdi-plus-circle"></i> New Service
           </button>
         </div>
 
         <div v-if="services">
-          <h3 class="text-center mt-5" v-if="services.length === 0">
+          <h3 class="text-center mt-5" v-if="!HAS_SERVICES">
             No services yet.
           </h3>
 
@@ -44,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr :class="{ selectable: true, selected: service._id !== undefined && service._id === selectedService._id }" v-for="service in services" :key="service.name" @click="selectService(service)">
+              <tr :class="{ selectable: true, selected: service._id !== undefined && service._id === selectedService._id }" v-for="service in services" :key="service.name" @click="SELECT_SERVICE(service)">
                 <td>{{service.name}}</td>
                 <td v-if="service.description">{{service.description}}</td>
                 <td v-if="!service.description">(no description)</td>
@@ -58,14 +58,14 @@
       <!-- Add/edit service column -->
       <div class="col-5 detail">
 
-        <h3 class="text-center mt-5" v-if="formStatus === 'notSelected'">
+        <h3 class="text-center mt-5" v-if="SERVICES_NOT_SELECTED">
           Please select one of the services to the left.
         </h3>
 
-        <form v-if="formStatus !== 'notSelected'" @submit.prevent="attemptSave">
+        <form v-if="SERVICES_NOT_SELECTED" @submit.prevent="attemptSave()">
           <fieldset>
-            <h1 class="mb-3" v-if="formStatus === 'new'">Add Service</h1>
-            <h1 class="mb-3" v-if="formStatus === 'edit'">Edit Service</h1>
+            <h1 class="mb-3" v-if="SERVICES_NEW_FORM">Add Service</h1>
+            <h1 class="mb-3" v-if="SERVICES_EDIT_FORM">Edit Service</h1>
             <div class="form-group">
               <label for="name">Name</label>
               <input name="name"
@@ -89,10 +89,10 @@
                 rows="3"></textarea>
               <span v-show="errors.has('description')" class="invalid-feedback">{{ errors.first('description') }}</span>
             </div>
-            <button type="button" class="btn btn-outline-danger" v-if="formStatus === 'edit'" @click="deleteService">Delete Service</button>
+            <button type="button" class="btn btn-outline-danger" v-if="SERVICES_EDIT_FORM" @click="DELETE_SERVICE">Delete Service</button>
             <br>
             <button type="submit" class="btn btn-primary mt-4">Save</button>
-            <button type="reset" class="btn btn mt-4" @click="resetForm">Cancel</button>
+            <button type="reset" class="btn btn mt-4" @click="RESET_SERVICE_FORM">Cancel</button>
           </fieldset>
         </form>
       </div>
@@ -105,92 +105,52 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
+import * as mutations from '../../constants/mutation-types'
+import * as getters from '../../constants/getter-types'
+import * as actions from '../../constants/action-types'
 export default {
-  data: () => ({
-    loading: false,
-    formStatus: 'empty', // empty, notSelected, new, edit
-    services: [],
-    selectedService: {
-      name: '',
-      description: ''
-    }
-  }),
   async created () {
-    this.getServices()
+    this.GET_SERVICES()
   },
   methods: {
-    createNewService () {
-      this.formStatus = 'new'
-      this.selectedService = {
-        name: '',
-        description: ''
-      }
-      this.$nextTick(() => {
-        this.errors.clear()
-      })
-    },
-    async attemptSave () {
-      let preSaveService = {...this.selectedService}
+    async attemptSave (service) {
       let validation = await this.$validator.validateAll()
       if (validation) {
-        try {
-          if (this.formStatus === 'new') {
-            this.services.push(this.selectedService)
-            axios.post(`api/services`, this.selectedService)
-          }
-          if (this.formStatus === 'edit') axios.put(`api/services`, this.selectedService)
-        } catch (e) {
-          if (this.formStatus === 'new') {
-            this.services.filter(service => service.name !== this.selectedService.name)
-          } else if (this.formStatus === 'edit') {
-            this.selectedService = {...preSaveService}
-          }
-        } finally {
-          this.getServices()
-          this.formStatus = 'notSelected'
-          this.selectedService = {
-            name: '',
-            description: ''
-          }
-        }
+        this.$store.dispatch(actions.SAVE_SERVICE, this.selectedService)
       }
     },
-    resetForm () {
-      this.formStatus = 'notSelected'
-      this.selectedService = {
-        name: '',
-        description: ''
-      }
-    },
-    async getServices () {
-      const { data } = await axios.get(`/api/services`)
-      this.services = data
-      if (data && data.length > 0) this.formStatus = 'notSelected'
-    },
-    selectService (service) {
-      this.selectedService = service
-      this.formStatus = 'edit'
-    },
-    deleteService () {
-      let preDeletedService = {...this.selectedService}
-      try {
-        axios.delete(`/api/services/${this.selectedService._id}`)
-        this.services = this.services.filter(service => service._id !== this.selectedService._id)
-      } catch (error) {
-        this.services.push(preDeletedService)
-      } finally {
-        this.getServices()
-        this.formStatus = 'notSelected'
-        this.selectedService = {
-          name: '',
-          description: ''
-        }
-      }
-    }
+    ...mapActions([
+      actions.DELETE_SERVICE,
+      actions.GET_SERVICES
+    ]),
+    ...mapMutations([
+      mutations.SELECT_SERVICE,
+      mutations.RESET_SERVICE_FORM,
+      mutations.SETUP_NEW_SERVICE
+    ])
   },
   computed: {
-    hasServices: () => this.services && this.services.length() > 0
+    ...mapState({
+      loading: state => state.services.loading,
+      services: state => state.services.services
+    }),
+    ...mapGetters([
+      getters.HAS_SERVICES,
+      getters.SERVICES_EMPTY,
+      getters.SERVICES_NOT_SELECTED,
+      getters.SERVICES_NEW_FORM,
+      getters.SERVICES_EDIT_FORM
+    ]),
+    selectedService: {
+      get () {
+        return this.$store.state.services.selectedService
+      },
+      set (value) {
+        debugger
+        this.$store.commit(mutations.SET_SELECTED_SERVICE, value)
+      }
+    }
   }
 }
 </script>
